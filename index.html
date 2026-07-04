@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://benevolent-marshmallow-9f8d3f.netlify.app/ -->
+<html lang="th"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Dashboard 2569</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./อูปกรณ์ Dashboard 2569_files/css2" rel="stylesheet">
+<script src="./อูปกรณ์ Dashboard 2569_files/chart.umd.js.ดาวน์โหลด"></script>
+<script src="./อูปกรณ์ Dashboard 2569_files/xlsx.full.min.js.ดาวน์โหลด"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-base: #eef1f6;
+    --bg-panel: #ffffff;
+    --bg-panel-2: #f6f8fb;
+    --bg-elevated: #ffffff;
+    --border: rgba(15, 30, 80, 0.08);
+    --border-strong: rgba(15, 30, 80, 0.15);
+    --text: #0f172a;
+    --text-dim: #475569;
+    --text-faint: #94a3b8;
+
+    --accent-cyan: #0284c7;
+    --accent-emerald: #059669;
+    --accent-amber: #b45309;
+    --accent-rose: #be123c;
+    --accent-violet: #6d28d9;
+    --accent-blue: #1d4ed8;
+
+    --grid: rgba(15, 30, 80, 0.05);
+  }
+
+  html, body {
+    background: var(--bg-base);
+    color: var(--text);
+    font-family: 'IBM Plex Sans Thai', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Premium soft background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 5% 0%, rgba(29, 78, 216, 0.09), transparent 50%),
+      radial-gradient(ellipse 55% 45% at 95% 100%, rgba(109, 40, 217, 0.07), transparent 50%),
+      radial-gradient(ellipse 45% 35% at 55% 45%, rgba(5, 150, 105, 0.05), transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(15, 30, 80, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 30, 80, 0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .dashboard {
+    position: relative;
+    z-index: 1;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 28px 32px 60px;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .logo-mark {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 22px;
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(29, 78, 216, 0.3);
+  }
+
+  .header-title h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .header-title .meta {
+    color: var(--text-dim);
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .header-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    background: rgba(5, 150, 105, 0.08);
+    border: 1px solid rgba(5, 150, 105, 0.2);
+    border-radius: 999px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #059669;
+    letter-spacing: 0.05em;
+  }
+
+  .pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #059669;
+    box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.5);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(5, 150, 105, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
+  }
+
+  /* Upload zone */
+  .upload-section {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 1px 4px rgba(15, 30, 80, 0.06);
+  }
+
+  .upload-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .upload-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(29, 78, 216, 0.08);
+    border: 1px solid rgba(29, 78, 216, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1d4ed8;
+    flex-shrink: 0;
+  }
+
+  .upload-text { flex: 1; min-width: 200px; }
+  .upload-text h3 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  .upload-text p { font-size: 13px; color: var(--text-dim); }
+
+  .btn {
+    background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+    color: #ffffff;
+    border: none;
+    padding: 11px 22px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    letter-spacing: 0.02em;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(29, 78, 216, 0.3);
+  }
+
+  .btn:active { transform: translateY(0); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border-strong);
+  }
+
+  .btn-ghost:hover {
+    color: var(--text);
+    background: rgba(15, 30, 80, 0.04);
+    box-shadow: none;
+  }
+
+  /* Stat grid */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 4px rgba(15, 30, 80, 0.06);
+  }
+
+  .stat-card:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 4px 16px rgba(15, 30, 80, 0.1);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    opacity: 0.9;
+  }
+
+  .stat-card[data-c="cyan"] { --accent: #0284c7; }
+  .stat-card[data-c="emerald"] { --accent: #059669; }
+  .stat-card[data-c="amber"] { --accent: #b45309; }
+  .stat-card[data-c="rose"] { --accent: #be123c; }
+  .stat-card[data-c="violet"] { --accent: #6d28d9; }
+  .stat-card[data-c="blue"] { --accent: #1d4ed8; }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .stat-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .stat-unit {
+    font-size: 13px;
+    color: var(--text-faint);
+    font-weight: 400;
+    margin-left: 6px;
+  }
+
+  .stat-sub {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 18px;
+    background: #1d4ed8;
+    border-radius: 2px;
+  }
+
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.05em;
+  }
+
+  /* Chart panel */
+  .panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(15, 30, 80, 0.06);
+  }
+
+  .panel-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .panel-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 320px;
+  }
+
+  .chart-wrap.tall { height: 380px; }
+  .chart-wrap.short { height: 240px; }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* Legend custom */
+  .custom-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .custom-legend span.item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .custom-legend .swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+  }
+
+  /* Data table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 4px;
+  }
+
+  .data-table th, .data-table td {
+    padding: 10px 8px;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  .data-table th:first-child, .data-table td:first-child {
+    text-align: left;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-size: 13px;
+  }
+
+  .data-table th {
+    color: var(--text-faint);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border-strong);
+    padding-bottom: 12px;
+  }
+
+  .data-table td {
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .data-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .data-table .total-row td {
+    border-top: 1px solid var(--border-strong);
+    border-bottom: none;
+    color: #0284c7;
+    font-weight: 600;
+    padding-top: 12px;
+  }
+
+  .data-table .zero { color: var(--text-faint); }
+  .data-table .has-value { color: #059669; font-weight: 600; }
+
+  /* Insight cards */
+  .insights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .insight {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    border-left: 3px solid #1d4ed8;
+    box-shadow: 0 1px 4px rgba(15, 30, 80, 0.06);
+  }
+
+  .insight[data-c="emerald"] { border-left-color: #059669; }
+  .insight[data-c="amber"] { border-left-color: #b45309; }
+  .insight[data-c="rose"] { border-left-color: #be123c; }
+
+  .insight-label {
+    font-size: 11px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 8px;
+  }
+
+  .insight-value {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .insight-detail {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  /* File chip */
+  .file-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: rgba(29, 78, 216, 0.07);
+    border: 1px solid rgba(29, 78, 216, 0.18);
+    border-radius: 8px;
+    font-size: 12px;
+    color: #1d4ed8;
+    margin-right: 8px;
+    margin-top: 8px;
+  }
+
+  .file-chip .x {
+    cursor: pointer;
+    opacity: 0.6;
+  }
+
+  .file-chip .x:hover { opacity: 1; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.1em;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    text-transform: uppercase;
+  }
+
+  /* Tab nav */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 20px;
+    width: fit-content;
+    box-shadow: 0 1px 4px rgba(15, 30, 80, 0.06);
+  }
+
+  .tab {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+  }
+
+  .tab.active {
+    background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(29, 78, 216, 0.25);
+  }
+
+  .tab:hover:not(.active) {
+    color: var(--text);
+    background: rgba(15, 30, 80, 0.05);
+  }
+
+  @media (max-width: 1100px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .insights { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .dashboard { padding: 16px; }
+    .stat-grid { grid-template-columns: 1fr; }
+    .header { flex-direction: column; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="dashboard">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-brand">
+      <div class="logo-mark">SD</div>
+      <div class="header-title">
+        <h1>Sales Performance Dashboard</h1>
+        <div class="meta">FY 2569 · Engine + SIP Products · Last updated: มิ.ย. 2569</div>
+      </div>
+    </div>
+    <div class="header-status">
+      <span class="pulse"></span>
+      <span>LIVE DATA</span>
+    </div>
+  </div>
+
+  <!-- Upload zone -->
+  <div class="upload-section">
+    <div class="upload-row">
+      <div class="upload-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+      </div>
+      <div class="upload-text">
+        <h3>อัพโหลดไฟล์ Excel อัพเดท</h3>
+        <p>ลากไฟล์มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์ · รองรับ .xlsx, .xls, .csv</p>
+        <div id="file-list"></div>
+      </div>
+      <input type="file" id="file-input" accept=".xlsx,.xls,.csv" multiple="" style="display:none;">
+      <button class="btn" onclick="document.getElementById(&#39;file-input&#39;).click()">เลือกไฟล์</button>
+      <button class="btn btn-ghost" onclick="resetData()">รีเซ็ต</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stat-grid">
+    <div class="stat-card" data-c="cyan">
+      <div class="stat-label">
+        <span>Engine Sales (YTD)</span>
+        <span class="stat-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4"></path></svg>
+        </span>
+      </div>
+      <div class="stat-value">13<span class="stat-unit">เครื่อง</span></div>
+      <div class="stat-sub">รวม 6 เดือน · เป้า 30/ปี</div>
+    </div>
+    <div class="stat-card" data-c="emerald">
+      <div class="stat-label">
+        <span>SIP Cutter (YTD)</span>
+        <span class="stat-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </span>
+      </div>
+      <div class="stat-value">22<span class="stat-unit">เครื่อง</span></div>
+      <div class="stat-sub">เครื่องตัดหญ้า SIP</div>
+    </div>
+    <div class="stat-card" data-c="amber">
+      <div class="stat-label">
+        <span>SIP Wheel Sets</span>
+        <span class="stat-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+        </span>
+      </div>
+      <div class="stat-value">14<span class="stat-unit">ชุด</span></div>
+      <div class="stat-sub">ชุดล้อยางเรียบ</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-tab="engine">เครื่องยนต์ ZT</button>
+    <button class="tab" data-tab="cutter">เครื่องตัดหญ้า SIP</button>
+    <button class="tab" data-tab="wheel">ชุดล้อยาง SIP</button>
+  </div>
+
+  <!-- TAB: ENGINE -->
+  <div data-pane="engine">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">เครื่องยนต์ ZT — รายเดือนแยกรุ่น</div>
+        <div class="section-tag">[ ENGINE · BY MODEL ]</div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">ยอดขายรายเดือน · แยกรุ่น</div>
+        <div class="panel-sub">ม.ค. — ธ.ค. 2569 · all engine models</div>
+        <div class="custom-legend" id="legend-engine"><span class="item"><span class="swatch" style="background:#1d4ed8"></span>RT 80M</span><span class="item"><span class="swatch" style="background:#dc2626"></span>RT 90M</span><span class="item"><span class="swatch" style="background:#16a34a"></span>ZT100S Plus</span><span class="item"><span class="swatch" style="background:#d97706"></span>ZT110S Plus</span><span class="item"><span class="swatch" style="background:#7c3aed"></span>ZT125 DIS Plus-SW</span><span class="item"><span class="swatch" style="background:#0891b2"></span>ZT140 DIS Plus-SW</span><span class="item"><span class="swatch" style="background:#be123c"></span>ZT155 DIS Plus-SW</span><span class="item"><span class="swatch" style="background:#166534"></span>ZT180 DIS Plus-SW</span></div>
+        <div class="chart-wrap tall"><canvas id="engineMonthlyChart" role="img" aria-label="Engine sales by model" width="1163" height="475" style="display: block; box-sizing: border-box; height: 380px; width: 930px;">ยอดเครื่องยนต์รายเดือน</canvas></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">เปรียบเทียบยอดรวม — 2568 vs 2569</div>
+        <div class="section-tag">[ YEAR-ON-YEAR · ENGINE ]</div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">ยอดขายรายเดือน (รวมทุกรุ่น) เทียบปีต่อปี</div>
+        <div class="panel-sub">ยอดรวม 2568 = 29 เครื่อง · hover เพื่อดู % เปลี่ยนแปลง</div>
+        <div class="chart-wrap"><canvas id="engineYearChart" role="img" aria-label="Engine YoY comparison" width="1163" height="400" style="display: block; box-sizing: border-box; height: 320px; width: 930px;">เทียบปี engine</canvas></div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-bottom:24px;">
+      <div class="panel-title">ตารางยอดขายเครื่องยนต์ ZT ปี 2569</div>
+      <div class="panel-sub">หน่วย: เครื่อง</div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" id="engineTable"><thead><tr><th>รุ่น</th><th>ม.ค.</th><th>ก.พ.</th><th>มี.ค.</th><th>เม.ย.</th><th>พ.ค.</th><th>มิ.ย.</th><th>ก.ค.</th><th>ส.ค.</th><th>ก.ย.</th><th>ต.ค.</th><th>พ.ย.</th><th>ธ.ค.</th><th>รวม</th></tr></thead><tbody><tr><td>RT 80M</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero"><strong>—</strong></td></tr><tr><td>RT 90M</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">1</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>1</strong></td></tr><tr><td>ZT100S Plus</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">1</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>1</strong></td></tr><tr><td>ZT110S Plus</td><td class="zero">—</td><td class="has-value">1</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">1</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>2</strong></td></tr><tr><td>ZT125 DIS Plus-SW</td><td class="has-value">1</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">1</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>2</strong></td></tr><tr><td>ZT140 DIS Plus-SW</td><td class="zero">—</td><td class="has-value">1</td><td class="zero">—</td><td class="has-value">2</td><td class="zero">—</td><td class="has-value">1</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>4</strong></td></tr><tr><td>ZT155 DIS Plus-SW</td><td class="zero">—</td><td class="has-value">2</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">1</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>3</strong></td></tr><tr><td>ZT180 DIS Plus-SW</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero"><strong>—</strong></td></tr><tr class="total-row"><td>รวมทั้งหมด</td><td>1</td><td>4</td><td>—</td><td>3</td><td>2</td><td>3</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>13</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <div class="insights">
+      <div class="insight" data-c="cyan">
+        <div class="insight-label">เดือนขายดีสุด (2569)</div>
+        <div class="insight-value">กุมภาพันธ์</div>
+        <div class="insight-detail">ขายได้ 4 เครื่อง (ZT110S+ZT140+ZT155×2)</div>
+      </div>
+      <div class="insight" data-c="emerald">
+        <div class="insight-label">ยอด YTD 2569</div>
+        <div class="insight-value">13 เครื่อง</div>
+        <div class="insight-detail">ม.ค.–มิ.ย. · เทียบ 2568 = 21 เครื่อง (6 เดือน)</div>
+      </div>
+      <div class="insight" data-c="amber">
+        <div class="insight-label">ยอดรวม 2568</div>
+        <div class="insight-value">29 เครื่อง</div>
+        <div class="insight-detail">ม.ค.–ธ.ค. 2568</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TAB: CUTTER -->
+  <div data-pane="cutter" style="display:none;">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">เครื่องตัดหญ้า SIP — รายเดือนแยกรุ่น</div>
+        <div class="section-tag">[ CUTTER · BY SIZE ]</div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">ยอดขายรายเดือน · แยกขนาด</div>
+        <div class="panel-sub">5 รุ่น · 12 เดือน</div>
+        <div class="custom-legend" id="legend-cutter"><span class="item"><span class="swatch" style="background:#1d4ed8"></span>1.5ม. ใบพับ</span><span class="item"><span class="swatch" style="background:#dc2626"></span>1.5ม. ใบยาว</span><span class="item"><span class="swatch" style="background:#16a34a"></span>1.8ม. ใบพับ</span><span class="item"><span class="swatch" style="background:#d97706"></span>1.8ม. ใบยาว</span><span class="item"><span class="swatch" style="background:#7c3aed"></span>1.25ม.</span><span class="item"><span class="swatch" style="background:#0891b2"></span>0.85ม.</span></div>
+        <div class="chart-wrap tall"><canvas id="cutterMonthlyChart" role="img" aria-label="Cutter sales by model" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0">ยอดเครื่องตัดหญ้ารายเดือน</canvas></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">เปรียบเทียบยอดรวม — 2568 vs 2569</div>
+        <div class="section-tag">[ YEAR-ON-YEAR · CUTTER ]</div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">ยอดขายรายเดือน (รวมทุกรุ่น) เทียบปีต่อปี</div>
+        <div class="panel-sub">ยอดรวม 2568 = 34 เครื่อง · hover เพื่อดู % เปลี่ยนแปลง</div>
+        <div class="chart-wrap"><canvas id="cutterYearChart" role="img" aria-label="Cutter YoY comparison" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0">เทียบปี cutter</canvas></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">ตารางยอดขายเครื่องตัดหญ้า SIP ปี 2569</div>
+      <div class="panel-sub">หน่วย: เครื่อง</div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" id="cutterTable"><thead><tr><th>รุ่น</th><th>ม.ค.</th><th>ก.พ.</th><th>มี.ค.</th><th>เม.ย.</th><th>พ.ค.</th><th>มิ.ย.</th><th>ก.ค.</th><th>ส.ค.</th><th>ก.ย.</th><th>ต.ค.</th><th>พ.ย.</th><th>ธ.ค.</th><th>รวม</th></tr></thead><tbody><tr><td>1.5ม. ใบพับ</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">2</td><td class="has-value">2</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>4</strong></td></tr><tr><td>1.5ม. ใบยาว</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero"><strong>—</strong></td></tr><tr><td>1.8ม. ใบพับ</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">2</td><td class="zero">—</td><td class="has-value">1</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>3</strong></td></tr><tr><td>1.8ม. ใบยาว</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">2</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>2</strong></td></tr><tr><td>1.25ม.</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">2</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>2</strong></td></tr><tr><td>0.85ม.</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">2</td><td class="has-value">4</td><td class="has-value">5</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>11</strong></td></tr><tr class="total-row"><td>รวมทั้งหมด</td><td>—</td><td>—</td><td>—</td><td>4</td><td>6</td><td>12</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>22</td></tr></tbody></table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TAB: WHEEL -->
+  <div data-pane="wheel" style="display:none;">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">ชุดล้อยางเรียบ SIP — รายเดือนแยกรุ่น</div>
+        <div class="section-tag">[ WHEEL · BY MODEL ]</div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">ยอดขายรายเดือน · แยกรุ่น</div>
+        <div class="panel-sub">4 รุ่น · 12 เดือน</div>
+        <div class="custom-legend" id="legend-wheel"><span class="item"><span class="swatch" style="background:#1d4ed8"></span>รุ่น B ความสูงลดลง</span><span class="item"><span class="swatch" style="background:#dc2626"></span>รุ่น B ความสูงปกติ</span><span class="item"><span class="swatch" style="background:#16a34a"></span>รุ่น L ความสูงลดลง</span><span class="item"><span class="swatch" style="background:#d97706"></span>รุ่น L ความสูงปกติ</span></div>
+        <div class="chart-wrap tall"><canvas id="wheelMonthlyChart" role="img" aria-label="Wheel sales by model" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0">ยอดล้อยางรายเดือน</canvas></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">เปรียบเทียบยอดรวม — 2568 vs 2569</div>
+        <div class="section-tag">[ YEAR-ON-YEAR · WHEEL ]</div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">ยอดขายรายเดือน (รวมทุกรุ่น) เทียบปีต่อปี</div>
+        <div class="panel-sub">ยอดรวม 2568 = 36 ชุด · hover เพื่อดู % เปลี่ยนแปลง</div>
+        <div class="chart-wrap"><canvas id="wheelYearChart" role="img" aria-label="Wheel YoY comparison" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0">เทียบปี wheel</canvas></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">ตารางยอดขายชุดล้อยาง SIP ปี 2569</div>
+      <div class="panel-sub">หน่วย: ชุด</div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" id="wheelTable"><thead><tr><th>รุ่น</th><th>ม.ค.</th><th>ก.พ.</th><th>มี.ค.</th><th>เม.ย.</th><th>พ.ค.</th><th>มิ.ย.</th><th>ก.ค.</th><th>ส.ค.</th><th>ก.ย.</th><th>ต.ค.</th><th>พ.ย.</th><th>ธ.ค.</th><th>รวม</th></tr></thead><tbody><tr><td>รุ่น B ความสูงลดลง</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">1</td><td class="zero">—</td><td class="has-value">1</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>2</strong></td></tr><tr><td>รุ่น B ความสูงปกติ</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">2</td><td class="zero">—</td><td class="has-value">4</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>6</strong></td></tr><tr><td>รุ่น L ความสูงลดลง</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">4</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>4</strong></td></tr><tr><td>รุ่น L ความสูงปกติ</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value">1</td><td class="has-value">1</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="zero">—</td><td class="has-value"><strong>2</strong></td></tr><tr class="total-row"><td>รวมทั้งหมด</td><td>—</td><td>—</td><td>—</td><td>3</td><td>1</td><td>10</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>14</td></tr></tbody></table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Generated by Claude · Sales Dashboard 2569 · Tap any chart to inspect data
+  </div>
+
+</div>
+
+<script>
+// ============= DATA =============
+const MONTHS = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+
+let DATA = {
+  engine: {
+    // ม.ค.  ก.พ.  มี.ค. เม.ย. พ.ค.  มิ.ย. ก.ค.  ส.ค.  ก.ย.  ต.ค.  พ.ย.  ธ.ค.
+    'RT 80M':            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'RT 90M':            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], // มิ.ย.=1
+    'ZT100S Plus':       [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    'ZT110S Plus':       [0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], // มิ.ย.=1
+    'ZT125 DIS Plus-SW': [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    'ZT140 DIS Plus-SW': [0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0], // มิ.ย.=1
+    'ZT155 DIS Plus-SW': [0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    'ZT180 DIS Plus-SW': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  },
+  // ยอดรวมเครื่องยนต์ปี 2568 รายเดือน (รวม = 29)
+  engine2568: [2, 5, 3, 2, 5, 4, 5, 1, 1, 1, 0, 0],
+
+  cutter: {
+    // ม.ค.  ก.พ.  มี.ค. เม.ย. พ.ค.  มิ.ย. ก.ค.  ส.ค.  ก.ย.  ต.ค.  พ.ย.  ธ.ค.
+    '1.5ม. ใบพับ': [0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0], // มิ.ย.=2
+    '1.5ม. ใบยาว': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    '1.8ม. ใบพับ': [0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0], // มิ.ย.=1
+    '1.8ม. ใบยาว': [0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0], // มิ.ย.=2 (รุ่นใหม่เริ่มขาย)
+    '1.25ม.':      [0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0], // มิ.ย.=2 (รุ่นใหม่เพิ่มเข้าไลน์อัพ)
+    '0.85ม.':      [0, 0, 0, 2, 4, 5, 0, 0, 0, 0, 0, 0]  // มิ.ย.=5
+  },
+  // ยอดรวมเครื่องตัดหญ้า SIP ปี 2568 (จากแถว "รวมทั้งหมด" รวม = 34)
+  cutter2568: [0, 0, 3, 1, 2, 9, 7, 7, 2, 2, 1, 0],
+
+  wheel: {
+    // ม.ค.  ก.พ.  มี.ค. เม.ย. พ.ค.  มิ.ย. ก.ค.  ส.ค.  ก.ย.  ต.ค.  พ.ย.  ธ.ค.
+    'รุ่น B ความสูงลดลง': [0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0], // มิ.ย.=1
+    'รุ่น B ความสูงปกติ': [0, 0, 0, 2, 0, 4, 0, 0, 0, 0, 0, 0], // มิ.ย.=4
+    'รุ่น L ความสูงลดลง': [0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0], // มิ.ย.=4 (เริ่มขายเดือนนี้)
+    'รุ่น L ความสูงปกติ': [0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0]  // มิ.ย.=1
+  },
+  // ยอดรวมชุดล้อยาง SIP ปี 2568 (จากแถว "รวมทั้งหมด" รวม = 36)
+  wheel2568: [0, 0, 1, 0, 4, 8, 8, 6, 3, 4, 1, 1]
+};
+
+// Color palette — rich, high-contrast for light bg
+const COLORS = {
+  cyan: '#0284c7',
+  emerald: '#059669',
+  amber: '#b45309',
+  rose: '#be123c',
+  violet: '#6d28d9',
+  blue: '#1d4ed8',
+  pink: '#9d174d',
+  teal: '#0f766e',
+  orange: '#c2410c'
+};
+
+// Chart.js global config
+Chart.defaults.font.family = "'IBM Plex Sans Thai', sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#475569';
+Chart.defaults.scale.grid.color = 'rgba(15, 30, 80, 0.06)';
+Chart.defaults.scale.grid.borderColor = 'rgba(15, 30, 80, 0.08)';
+
+const charts = {};
+
+function destroyChart(id) {
+  if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+}
+
+function buildLegend(id, items) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = items.map(it =>
+    `<span class="item"><span class="swatch" style="background:${it.color}"></span>${it.label}</span>`
+  ).join('');
+}
+
+// ============= CHARTS =============
+function renderAll() {
+  renderEngineMonthly();
+  renderEngineYearCompare();
+  renderEngineTable();
+  renderCutterMonthly();
+  renderCutterYearCompare();
+  renderCutterTable();
+  renderWheelMonthly();
+  renderWheelYearCompare();
+  renderWheelTable();
+}
+
+function sumByMonth(category) {
+  const arr = new Array(12).fill(0);
+  Object.values(DATA[category]).forEach(series => {
+    series.forEach((v, i) => arr[i] += v);
+  });
+  return arr;
+}
+
+// Generic year-comparison bar chart (2568 vs 2569 monthly totals)
+function renderYearCompare(canvasId, data2568, data2569, label) {
+  destroyChart(canvasId);
+  charts[canvasId] = new Chart(document.getElementById(canvasId), {
+    type: 'bar',
+    data: {
+      labels: MONTHS,
+      datasets: [
+        {
+          label: 'ปี 2568',
+          data: data2568,
+          backgroundColor: 'rgba(100,116,139,0.55)',
+          borderColor: '#64748b',
+          borderWidth: 1,
+          borderRadius: 4
+        },
+        {
+          label: 'ปี 2569',
+          data: data2569,
+          backgroundColor: '#1d4ed8',
+          borderRadius: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', align: 'end', labels: { boxWidth: 12, boxHeight: 12, padding: 16, color: '#475569' } },
+        tooltip: {
+          backgroundColor: '#ffffff', borderColor: 'rgba(15,30,80,0.12)', borderWidth: 1, padding: 12,
+          titleColor: '#0f172a', bodyColor: '#0f172a',
+          callbacks: {
+            label: c => c.dataset.label + ': ' + c.parsed.y + ' ' + label,
+            afterBody: items => {
+              const m = items[0].dataIndex;
+              const v68 = data2568[m], v69 = data2569[m];
+              if (v68 === 0 && v69 === 0) return '';
+              const diff = v69 - v68;
+              const pct = v68 > 0 ? ((diff / v68) * 100).toFixed(0) : '—';
+              return diff >= 0
+                ? `▲ เพิ่ม ${diff} (${pct}%)`
+                : `▼ ลด ${Math.abs(diff)} (${pct}%)`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { beginAtZero: true, ticks: { stepSize: 1, precision: 0 } }
+      }
+    }
+  });
+}
+
+function renderEngineYearCompare() {
+  renderYearCompare('engineYearChart', DATA.engine2568, sumByMonth('engine'), 'เครื่อง');
+}
+function renderCutterYearCompare() {
+  renderYearCompare('cutterYearChart', DATA.cutter2568, sumByMonth('cutter'), 'เครื่อง');
+}
+function renderWheelYearCompare() {
+  renderYearCompare('wheelYearChart', DATA.wheel2568, sumByMonth('wheel'), 'ชุด');
+}
+
+function renderMonthlyByCategory(canvasId, category, palette, legendId) {
+  destroyChart(canvasId);
+  const models = Object.keys(DATA[category]);
+  const colors = palette;
+
+  buildLegend(legendId, models.map((m, i) => ({ label: m, color: colors[i % colors.length] })));
+
+  charts[canvasId] = new Chart(document.getElementById(canvasId), {
+    type: 'bar',
+    data: {
+      labels: MONTHS,
+      datasets: models.map((m, i) => ({
+        label: m,
+        data: DATA[category][m],
+        backgroundColor: colors[i % colors.length],
+        borderRadius: 4
+      }))
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#ffffff', borderColor: 'rgba(15,30,80,0.12)', borderWidth: 1, padding: 12,
+          callbacks: { label: c => c.dataset.label + ': ' + c.parsed.y }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, stacked: false },
+        y: { beginAtZero: true, ticks: { stepSize: 1, precision: 0 }, stacked: false }
+      }
+    }
+  });
+}
+
+function renderEngineMonthly() {
+  renderMonthlyByCategory('engineMonthlyChart', 'engine',
+    ['#1d4ed8','#dc2626','#16a34a','#d97706','#7c3aed','#0891b2','#be123c','#166534'],
+    'legend-engine');
+}
+
+function renderCutterMonthly() {
+  renderMonthlyByCategory('cutterMonthlyChart', 'cutter',
+    ['#1d4ed8', '#dc2626', '#16a34a', '#d97706', '#7c3aed', '#0891b2'], 'legend-cutter');
+}
+
+function renderWheelMonthly() {
+  renderMonthlyByCategory('wheelMonthlyChart', 'wheel',
+    ['#1d4ed8', '#dc2626', '#16a34a', '#d97706'], 'legend-wheel');
+}
+
+// ============= TABLES =============
+function renderTable(tableId, category) {
+  const tbl = document.getElementById(tableId);
+  const models = Object.keys(DATA[category]);
+
+  let html = '<thead><tr><th>รุ่น</th>';
+  MONTHS.forEach(m => html += `<th>${m}</th>`);
+  html += '<th>รวม</th></tr></thead><tbody>';
+
+  const totals = new Array(12).fill(0);
+  models.forEach(m => {
+    const series = DATA[category][m];
+    const sum = series.reduce((a,b)=>a+b, 0);
+    html += `<tr><td>${m}</td>`;
+    series.forEach((v, i) => {
+      totals[i] += v;
+      html += `<td class="${v === 0 ? 'zero' : 'has-value'}">${v === 0 ? '—' : v}</td>`;
+    });
+    html += `<td class="${sum === 0 ? 'zero' : 'has-value'}"><strong>${sum === 0 ? '—' : sum}</strong></td></tr>`;
+  });
+
+  const grandTotal = totals.reduce((a,b)=>a+b,0);
+  html += '<tr class="total-row"><td>รวมทั้งหมด</td>';
+  totals.forEach(t => html += `<td>${t === 0 ? '—' : t}</td>`);
+  html += `<td>${grandTotal}</td></tr>`;
+  html += '</tbody>';
+
+  tbl.innerHTML = html;
+}
+
+function renderEngineTable() { renderTable('engineTable', 'engine'); }
+function renderCutterTable() { renderTable('cutterTable', 'cutter'); }
+function renderWheelTable() { renderTable('wheelTable', 'wheel'); }
+
+// ============= TABS =============
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    const target = t.dataset.tab;
+    document.querySelectorAll('[data-pane]').forEach(p => {
+      p.style.display = (p.dataset.pane === target) ? '' : 'none';
+    });
+    setTimeout(renderAll, 50);
+  });
+});
+
+// Show engine pane on load
+document.querySelectorAll('[data-pane]').forEach(p => {
+  p.style.display = (p.dataset.pane === 'engine') ? '' : 'none';
+});
+
+// ============= FILE UPLOAD =============
+const uploadedFiles = [];
+const fileInput = document.getElementById('file-input');
+const fileList = document.getElementById('file-list');
+
+fileInput.addEventListener('change', async (e) => {
+  for (const file of e.target.files) {
+    uploadedFiles.push(file);
+    await parseFile(file);
+  }
+  renderFileList();
+  renderAll();
+});
+
+function renderFileList() {
+  fileList.innerHTML = uploadedFiles.map((f, i) =>
+    `<span class="file-chip">📄 ${f.name} <span class="x" onclick="removeFile(${i})">✕</span></span>`
+  ).join('');
+}
+
+window.removeFile = function(i) {
+  uploadedFiles.splice(i, 1);
+  renderFileList();
+};
+
+window.resetData = function() {
+  if (!confirm('รีเซ็ตข้อมูลกลับเป็นค่าเริ่มต้น?')) return;
+  location.reload();
+};
+
+async function parseFile(file) {
+  try {
+    const buf = await file.arrayBuffer();
+    const wb = XLSX.read(buf, { type: 'array' });
+    const monthMap = {
+      'ม.ค.': 0, 'มกราคม': 0, 'jan': 0, 'january': 0,
+      'ก.พ.': 1, 'กุมภาพันธ์': 1, 'feb': 1, 'february': 1,
+      'มี.ค.': 2, 'มีนาคม': 2, 'mar': 2, 'march': 2,
+      'เม.ย.': 3, 'เมษายน': 3, 'apr': 3, 'april': 3,
+      'พ.ค.': 4, 'พฤษภาคม': 4, 'may': 4,
+      'มิ.ย.': 5, 'มิถุนายน': 5, 'jun': 5, 'june': 5,
+      'ก.ค.': 6, 'กรกฎาคม': 6, 'jul': 6, 'july': 6,
+      'ส.ค.': 7, 'สิงหาคม': 7, 'aug': 7, 'august': 7,
+      'ก.ย.': 8, 'กันยายน': 8, 'sep': 8, 'september': 8,
+      'ต.ค.': 9, 'ตุลาคม': 9, 'oct': 9, 'october': 9,
+      'พ.ย.': 10, 'พฤศจิกายน': 10, 'nov': 10, 'november': 10,
+      'ธ.ค.': 11, 'ธันวาคม': 11, 'dec': 11, 'december': 11
+    };
+
+    wb.SheetNames.forEach(name => {
+      const sheet = wb.Sheets[name];
+      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+      // try detect category by sheet name or content
+      const lname = (name || '').toLowerCase();
+      let category = null;
+      if (/engine|เครื่องยนต์|kch/i.test(name)) category = 'engine';
+      else if (/cutter|ตัดหญ้า|sip.*1\.|sip.*0\.|grass/i.test(name)) category = 'cutter';
+      else if (/wheel|ล้อ|tire/i.test(name)) category = 'wheel';
+
+      // also scan rows
+      if (rows.length === 0) return;
+
+      // detect header row containing month columns
+      let headerRow = -1, monthCols = {};
+      for (let r = 0; r < Math.min(rows.length, 10); r++) {
+        const row = rows[r] || [];
+        const found = {};
+        row.forEach((cell, idx) => {
+          if (typeof cell === 'string') {
+            const k = cell.trim().toLowerCase();
+            if (monthMap[k] !== undefined) found[monthMap[k]] = idx;
+          }
+        });
+        if (Object.keys(found).length >= 3) {
+          headerRow = r;
+          monthCols = found;
+          break;
+        }
+      }
+
+      if (headerRow === -1) return;
+
+      // process data rows
+      for (let r = headerRow + 1; r < rows.length; r++) {
+        const row = rows[r] || [];
+        // model name = first non-empty string cell before month columns
+        let modelName = null;
+        for (let c = 0; c < Math.min(...Object.values(monthCols)); c++) {
+          if (typeof row[c] === 'string' && row[c].trim() && !/^[0-9.]+$/.test(row[c].trim())) {
+            modelName = row[c].trim();
+            break;
+          }
+        }
+        if (!modelName) continue;
+        if (/^(รวม|total|sum)/i.test(modelName)) continue;
+
+        // determine category from model name if not set
+        let cat = category;
+        if (!cat) {
+          if (/zt|kch|engine|เครื่องยนต์/i.test(modelName)) cat = 'engine';
+          else if (/sip.*\d|ตัดหญ้า|cutter|เมตร/i.test(modelName)) cat = 'cutter';
+          else if (/ล้อ|wheel|รุ่น [bl]/i.test(modelName)) cat = 'wheel';
+        }
+        if (!cat) continue;
+
+        if (!DATA[cat][modelName]) DATA[cat][modelName] = new Array(12).fill(0);
+        Object.entries(monthCols).forEach(([m, c]) => {
+          const v = parseFloat(row[c]);
+          if (!isNaN(v)) DATA[cat][modelName][parseInt(m)] = v;
+        });
+      }
+    });
+
+    console.log('Parsed file:', file.name, DATA);
+  } catch (err) {
+    console.error('Parse error:', err);
+    alert('ไม่สามารถอ่านไฟล์ ' + file.name + ' ได้: ' + err.message);
+  }
+}
+
+// ============= INIT =============
+renderAll();
+</script>
+
+
+
+</body></html>
